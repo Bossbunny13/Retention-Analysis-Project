@@ -1,0 +1,15 @@
+{
+	"name": "adf-retention-analysis",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "fd6e18f1-44a7-43b3-a9bb-0a2880190f5f",
+		"tenantId": "66756e6f-934b-4ec7-8031-b0d51de5b068"
+	}
+}
