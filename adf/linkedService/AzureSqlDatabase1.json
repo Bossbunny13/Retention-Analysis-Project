@@ -1,0 +1,23 @@
+{
+	"name": "AzureSqlDatabase1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "server-retentsion-analysis.database.windows.net",
+			"database": "db_retention_analysis_bunny",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "bunny",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault_Retention_Analysis_bunny",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sql-retention-password"
+			}
+		}
+	}
+}
