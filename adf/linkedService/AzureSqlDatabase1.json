@@ -7,7 +7,7 @@
 			"server": "server-retentsion-analysis.database.windows.net",
 			"database": "db_retention_analysis_bunny",
 			"encrypt": "mandatory",
-			"trustServerCertificate": false,
+			"trustServerCertificate": true,
 			"authenticationType": "SQL",
 			"userName": "bunny",
 			"password": {
@@ -17,6 +17,9 @@
 					"type": "LinkedServiceReference"
 				},
 				"secretName": "sql-retention-password"
+			},
+			"alwaysEncryptedSettings": {
+				"alwaysEncryptedAkvAuthType": "ManagedIdentity"
 			}
 		}
 	}
