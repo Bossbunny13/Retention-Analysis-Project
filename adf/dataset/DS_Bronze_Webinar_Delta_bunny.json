@@ -1,0 +1,22 @@
+{
+	"name": "DS_Bronze_Webinar_Delta_bunny",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_Retention_Lake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Retention_Analysis"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

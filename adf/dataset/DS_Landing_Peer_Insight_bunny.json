@@ -1,0 +1,71 @@
+{
+	"name": "DS_Landing_Peer_Insight_bunny",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_Retention_Lake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Retention_Analysis"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "peer_insights_raw.json",
+				"folderPath": "Peer Insights/2026/07",
+				"fileSystem": "landing"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"source": {
+					"type": "string"
+				},
+				"extract_date": {
+					"type": "string"
+				},
+				"total_reviews": {
+					"type": "integer"
+				},
+				"reviews": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"review_id": {
+								"type": "string"
+							},
+							"user_email": {
+								"type": "string"
+							},
+							"product_reviewed": {
+								"type": "string"
+							},
+							"rating": {
+								"type": "integer"
+							},
+							"review_text": {
+								"type": "string"
+							},
+							"review_date": {
+								"type": "string"
+							},
+							"view_count": {
+								"type": "integer"
+							},
+							"helpful_count": {
+								"type": "integer"
+							},
+							"product_category": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
