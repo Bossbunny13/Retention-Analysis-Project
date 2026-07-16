@@ -1,0 +1,426 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-retention-analysis"
+		},
+		"LS_ADLS_Retention_Lake_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_ADLS_Retention_Lake'"
+		},
+		"AzureKeyVault_Retention_Analysis_bunny_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-retention-analysis.vault.azure.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "server-retentsion-analysis.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "db_retention_analysis_bunny"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "bunny"
+		},
+		"LS_ADLS_Retention_Lake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storage01retention.dfs.core.windows.net/"
+		},
+		"LS_RestWebiner_platform_bunny_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://jsonplaceholder.typicode.com"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_Bronze_Document_Delta_bunny')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS_Retention_Lake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Retention_Analysis"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "bronze"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS_Retention_Lake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_Bronze_PeerInsights_Delta_Bunny')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS_Retention_Lake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Retention_Analysis"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "bronze"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS_Retention_Lake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_Bronze_Webinar_Delta_bunny')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS_Retention_Lake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Retention_Analysis"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "bronze"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS_Retention_Lake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_Landing_Peer_Insight_bunny')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS_Retention_Lake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Retention_Analysis"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "peer_insights_raw.json",
+						"folderPath": "Peer Insights/2026/07",
+						"fileSystem": "landing"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"source": {
+							"type": "string"
+						},
+						"extract_date": {
+							"type": "string"
+						},
+						"total_reviews": {
+							"type": "integer"
+						},
+						"reviews": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"review_id": {
+										"type": "string"
+									},
+									"user_email": {
+										"type": "string"
+									},
+									"product_reviewed": {
+										"type": "string"
+									},
+									"rating": {
+										"type": "integer"
+									},
+									"review_text": {
+										"type": "string"
+									},
+									"review_date": {
+										"type": "string"
+									},
+									"view_count": {
+										"type": "integer"
+									},
+									"helpful_count": {
+										"type": "integer"
+									},
+									"product_category": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS_Retention_Lake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_Landing_Webinar_json_bunny')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS_Retention_Lake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Retention_Analysis"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "webinar_events_raw.json",
+						"folderPath": "webinar/2026/07",
+						"fileSystem": "landing"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"source": {
+							"type": "string"
+						},
+						"extract_date": {
+							"type": "string"
+						},
+						"total_events": {
+							"type": "integer"
+						},
+						"events": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"event_id": {
+										"type": "string"
+									},
+									"webinar_id": {
+										"type": "string"
+									},
+									"webinar_title": {
+										"type": "string"
+									},
+									"user_id": {
+										"type": "integer"
+									},
+									"event_type": {
+										"type": "string"
+									},
+									"event_timestamp": {
+										"type": "string"
+									},
+									"duration_minutes": {
+										"type": "integer"
+									},
+									"webinar_date": {
+										"type": "string"
+									},
+									"attendee_email": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS_Retention_Lake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Document_downloads_bunny')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Retention_Analysis"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "download_id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "doc_id",
+						"type": "varchar"
+					},
+					{
+						"name": "doc_title",
+						"type": "varchar"
+					},
+					{
+						"name": "doc_category",
+						"type": "varchar"
+					},
+					{
+						"name": "user_email",
+						"type": "varchar"
+					},
+					{
+						"name": "download_timestamp",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "file_size_kb",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "platform",
+						"type": "varchar"
+					},
+					{
+						"name": "is_premium_content",
+						"type": "bit"
+					},
+					{
+						"name": "created_at",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "document_downloads"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVault_Retention_Analysis_bunny')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This has been created  for the retention analysis.",
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault_Retention_Analysis_bunny_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault_Retention_Analysis_bunny",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sql-retention-password"
+					},
+					"alwaysEncryptedSettings": {
+						"alwaysEncryptedAkvAuthType": "ManagedIdentity"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault_Retention_Analysis_bunny')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_ADLS_Retention_Lake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('LS_ADLS_Retention_Lake_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('LS_ADLS_Retention_Lake_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_RestWebiner_platform_bunny')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Tis with get us connect with rest API",
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('LS_RestWebiner_platform_bunny_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
