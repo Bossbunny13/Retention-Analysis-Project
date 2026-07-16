@@ -1,0 +1,11 @@
+{
+	"name": "AzureKeyVault_Retention_Analysis_bunny",
+	"properties": {
+		"description": "This has been created  for the retention analysis.",
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-retention-analysis.vault.azure.net/"
+		}
+	}
+}
