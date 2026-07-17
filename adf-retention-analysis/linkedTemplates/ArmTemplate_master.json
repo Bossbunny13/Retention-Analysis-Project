@@ -11,6 +11,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_ADLS_Retention_Lake'"
 		},
+		"LS_Databricks_Retention_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'LS_Databricks_Retention'"
+		},
+		"LS_Databricks_Retention_Bunny_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'LS_Databricks_Retention_Bunny'"
+		},
 		"AzureKeyVault_Retention_Analysis_bunny_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://kv-retention-analysis.vault.azure.net/"
@@ -30,6 +38,10 @@
 		"LS_ADLS_Retention_Lake_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storage01retention.dfs.core.windows.net/"
+		},
+		"LS_Databricks_Retention_Bunny_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0715-140755-srorgdr6"
 		},
 		"LS_RestWebiner_platform_bunny_properties_typeProperties_url": {
 			"type": "string",
@@ -65,11 +77,20 @@
 					"LS_ADLS_Retention_Lake_accountKey": {
 						"value": "[parameters('LS_ADLS_Retention_Lake_accountKey')]"
 					},
+					"LS_Databricks_Retention_accessToken": {
+						"value": "[parameters('LS_Databricks_Retention_accessToken')]"
+					},
+					"LS_Databricks_Retention_Bunny_accessToken": {
+						"value": "[parameters('LS_Databricks_Retention_Bunny_accessToken')]"
+					},
 					"AzureKeyVault_Retention_Analysis_bunny_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault_Retention_Analysis_bunny_properties_typeProperties_baseUrl')]"
 					},
 					"LS_ADLS_Retention_Lake_properties_typeProperties_url": {
 						"value": "[parameters('LS_ADLS_Retention_Lake_properties_typeProperties_url')]"
+					},
+					"LS_Databricks_Retention_Bunny_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('LS_Databricks_Retention_Bunny_properties_typeProperties_existingClusterId')]"
 					},
 					"LS_RestWebiner_platform_bunny_properties_typeProperties_url": {
 						"value": "[parameters('LS_RestWebiner_platform_bunny_properties_typeProperties_url')]"

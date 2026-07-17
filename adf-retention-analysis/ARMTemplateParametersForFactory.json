@@ -8,6 +8,12 @@
 		"LS_ADLS_Retention_Lake_accountKey": {
 			"value": ""
 		},
+		"LS_Databricks_Retention_accessToken": {
+			"value": ""
+		},
+		"LS_Databricks_Retention_Bunny_accessToken": {
+			"value": ""
+		},
 		"AzureKeyVault_Retention_Analysis_bunny_properties_typeProperties_baseUrl": {
 			"value": "https://kv-retention-analysis.vault.azure.net/"
 		},
@@ -22,6 +28,9 @@
 		},
 		"LS_ADLS_Retention_Lake_properties_typeProperties_url": {
 			"value": "https://storage01retention.dfs.core.windows.net/"
+		},
+		"LS_Databricks_Retention_Bunny_properties_typeProperties_existingClusterId": {
+			"value": "0715-140755-srorgdr6"
 		},
 		"LS_RestWebiner_platform_bunny_properties_typeProperties_url": {
 			"value": "https://jsonplaceholder.typicode.com"
