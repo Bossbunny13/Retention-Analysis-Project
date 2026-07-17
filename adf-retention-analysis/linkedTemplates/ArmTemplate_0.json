@@ -324,6 +324,78 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_broze_webinar_json_bunny')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS_Retention_Lake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "webinar",
+						"fileSystem": "bronze"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"source": {
+							"type": "string"
+						},
+						"extract_date": {
+							"type": "string"
+						},
+						"total_events": {
+							"type": "integer"
+						},
+						"events": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"event_id": {
+										"type": "string"
+									},
+									"webinar_id": {
+										"type": "string"
+									},
+									"webinar_title": {
+										"type": "string"
+									},
+									"user_id": {
+										"type": "integer"
+									},
+									"event_type": {
+										"type": "string"
+									},
+									"event_timestamp": {
+										"type": "string"
+									},
+									"duration_minutes": {
+										"type": "integer"
+									},
+									"webinar_date": {
+										"type": "string"
+									},
+									"attendee_email": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS_Retention_Lake')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -457,12 +529,12 @@
 								}
 							},
 							"sink": {
-								"type": "ParquetSink",
+								"type": "JsonSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "ParquetWriteSettings"
+									"type": "JsonWriteSettings"
 								}
 							},
 							"enableStaging": false,
@@ -477,7 +549,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "DS_Bronze_Webinar_Delta_bunny",
+								"referenceName": "DS_broze_webinar_json_bunny",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -494,7 +566,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_Landing_Webinar_json_bunny')]",
-				"[concat(variables('factoryId'), '/datasets/DS_Bronze_Webinar_Delta_bunny')]"
+				"[concat(variables('factoryId'), '/datasets/DS_broze_webinar_json_bunny')]"
 			]
 		},
 		{
