@@ -8,9 +8,6 @@
 		"LS_ADLS_Retention_Lake_accountKey": {
 			"value": ""
 		},
-		"LS_Databricks_Retention_accessToken": {
-			"value": ""
-		},
 		"LS_Databricks_Retention_Bunny_accessToken": {
 			"value": ""
 		},

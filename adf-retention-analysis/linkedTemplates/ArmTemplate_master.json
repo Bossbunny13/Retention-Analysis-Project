@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_ADLS_Retention_Lake'"
 		},
-		"LS_Databricks_Retention_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'LS_Databricks_Retention'"
-		},
 		"LS_Databricks_Retention_Bunny_accessToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'LS_Databricks_Retention_Bunny'"
@@ -76,9 +72,6 @@
 					},
 					"LS_ADLS_Retention_Lake_accountKey": {
 						"value": "[parameters('LS_ADLS_Retention_Lake_accountKey')]"
-					},
-					"LS_Databricks_Retention_accessToken": {
-						"value": "[parameters('LS_Databricks_Retention_accessToken')]"
 					},
 					"LS_Databricks_Retention_Bunny_accessToken": {
 						"value": "[parameters('LS_Databricks_Retention_Bunny_accessToken')]"

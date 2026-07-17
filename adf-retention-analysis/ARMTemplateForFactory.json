@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_ADLS_Retention_Lake'"
 		},
-		"LS_Databricks_Retention_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'LS_Databricks_Retention'"
-		},
 		"LS_Databricks_Retention_Bunny_accessToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'LS_Databricks_Retention_Bunny'"
@@ -841,25 +837,6 @@
 					"accountKey": {
 						"type": "SecureString",
 						"value": "[parameters('LS_ADLS_Retention_Lake_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_Databricks_Retention')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "This  created for an retention analysis pipeline",
-				"annotations": [],
-				"type": "AzureDatabricksDeltaLake",
-				"typeProperties": {
-					"domain": "https://adb-7405615685981536.16.azuredatabricks.net",
-					"clusterId": "0715-140755-srorgdr6",
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('LS_Databricks_Retention_accessToken')]"
 					}
 				}
 			},
