@@ -49,6 +49,45 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "Exec_Notebook_Silver_Standardize",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Exec_Pipeline_Webinar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Exec_Pipeline_Document",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Exec_Pipeline_PeerInsights",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/vaibhav.dimri23@gmail.com/Retention Analysis/silver/01_silver_standardize"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_Databricks_Retention_Bunny",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
