@@ -1,0 +1,67 @@
+{
+	"name": "DS_broze_webinar_json_bunny",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_Retention_Lake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "webinar",
+				"fileSystem": "bronze"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"source": {
+					"type": "string"
+				},
+				"extract_date": {
+					"type": "string"
+				},
+				"total_events": {
+					"type": "integer"
+				},
+				"events": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"event_id": {
+								"type": "string"
+							},
+							"webinar_id": {
+								"type": "string"
+							},
+							"webinar_title": {
+								"type": "string"
+							},
+							"user_id": {
+								"type": "integer"
+							},
+							"event_type": {
+								"type": "string"
+							},
+							"event_timestamp": {
+								"type": "string"
+							},
+							"duration_minutes": {
+								"type": "integer"
+							},
+							"webinar_date": {
+								"type": "string"
+							},
+							"attendee_email": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
