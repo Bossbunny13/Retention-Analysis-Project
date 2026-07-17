@@ -144,6 +144,30 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_Bronze_Peer_Insight_bunny')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS_Retention_Lake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "PeerInsights",
+						"fileSystem": "bronze"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS_Retention_Lake')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_Bronze_Webinar_Delta_bunny')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -457,12 +481,12 @@
 								}
 							},
 							"sink": {
-								"type": "ParquetSink",
+								"type": "JsonSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "ParquetWriteSettings"
+									"type": "JsonWriteSettings"
 								}
 							},
 							"enableStaging": false,
@@ -478,7 +502,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "DS_Bronze_PeerInsights_Delta_Bunny",
+								"referenceName": "DS_Bronze_Peer_Insight_bunny",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -495,7 +519,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_Landing_Peer_Insight_bunny')]",
-				"[concat(variables('factoryId'), '/datasets/DS_Bronze_PeerInsights_Delta_Bunny')]"
+				"[concat(variables('factoryId'), '/datasets/DS_Bronze_Peer_Insight_bunny')]"
 			]
 		},
 		{
