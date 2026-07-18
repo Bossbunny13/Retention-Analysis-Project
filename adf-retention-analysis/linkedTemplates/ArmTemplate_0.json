@@ -859,6 +859,48 @@
 							"referenceName": "LS_Databricks_Retention_Bunny",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "Act_On_Any_Failure_Alert",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Exec_Pipeline_Webinar",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "Exec_Pipeline_Document",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "Exec_Pipeline_PeerInsights",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {},
+							"url": "https://webhook.site/26d36d2b-fa8d-4d63-b5d7-b108120686ab",
+							"body": {
+								"status": "failure",
+								"pipeline": "@{pipeline().PipelineName}",
+								"message": "Pipeline failed - check ADF Monitor"
+							}
+						}
 					}
 				],
 				"policy": {
